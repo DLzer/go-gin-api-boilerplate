@@ -7,7 +7,10 @@ import (
 	"os"
 
 	"github.com/DLzer/go-gin-api-boilerplate/app/configs"
+	"github.com/DLzer/go-gin-api-boilerplate/app/controllers"
 	"github.com/DLzer/go-gin-api-boilerplate/app/middleware"
+	"github.com/DLzer/go-gin-api-boilerplate/app/repository/eventrepo"
+	"github.com/DLzer/go-gin-api-boilerplate/app/services/eventservice"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
@@ -46,13 +49,42 @@ func Run() {
 	}
 	defer db.Conn.Close()
 
-	// Run the App on the configured port
-	r.Run(fmt.Sprintf(":%s", config.Port))
-
 	/*
 		====== Middleware ============
 	*/
 	r.Use(middleware.CORSMiddleware())
+
+	/*
+		====== Repository Initalization ============
+	*/
+	eventRepo := eventrepo.NewEventRepo(db.Conn)
+
+	/*
+		====== Service Initialization ============
+	*/
+	eventService := eventservice.NewEventService(eventRepo)
+
+	/*
+		====== Controller Initialization ============
+	*/
+	eventController := controllers.NewEventController(eventService)
+
+	/*
+		====== Routes ============
+	*/
+
+	// Event routes
+	events := r.Group("/events")
+	{
+		events.POST("/create", eventController.PostEvent)
+		events.GET("", eventController.GetAllEvents)
+		events.GET("/:id", eventController.GetEventById)
+		events.GET("/delete/:id", eventController.DeleteEventById)
+	}
+
+	// Run the App on the configured port
+	r.Run(fmt.Sprintf(":%s", config.Port))
+
 }
 
 // Initialize expects the configuration model to attempt connecting to the PG
