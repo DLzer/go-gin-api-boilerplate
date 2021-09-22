@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"context"
@@ -23,6 +23,11 @@ var (
 
 type Database struct {
 	Conn *pgxpool.Pool
+}
+
+// Run the application
+func main() {
+	Run()
 }
 
 // Load in configs. Start the Gin Framework. Connect to the database.
