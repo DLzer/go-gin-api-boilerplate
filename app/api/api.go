@@ -89,7 +89,10 @@ func Run() {
 	}
 
 	// Run the App on the configured port
-	r.Run(fmt.Sprintf(":%s", config.Port))
+	err = r.Run(fmt.Sprintf(":%s", config.Port))
+	if err != nil {
+		log.Fatal("Could not run app: ", err)
+	}
 
 }
 
