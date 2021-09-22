@@ -8,6 +8,7 @@ import (
 
 	"github.com/DLzer/go-gin-api-boilerplate/app/configs"
 	"github.com/DLzer/go-gin-api-boilerplate/app/controllers"
+	"github.com/DLzer/go-gin-api-boilerplate/app/database"
 	"github.com/DLzer/go-gin-api-boilerplate/app/middleware"
 	"github.com/DLzer/go-gin-api-boilerplate/app/repository/eventrepo"
 	"github.com/DLzer/go-gin-api-boilerplate/app/services/eventservice"
@@ -48,6 +49,11 @@ func Run() {
 		log.Fatalf("Issue connecting to database %s", err)
 	}
 	defer db.Conn.Close()
+
+	/*
+		====== Database Migration ============
+	*/
+	_, _ = Migrate(db.Conn)
 
 	/*
 		====== Middleware ============
@@ -103,4 +109,16 @@ func Initialize(c configs.Config) (Database, error) {
 	log.Printf("Connected on %s", c.DB.DSN)
 
 	return db, nil
+}
+
+func Migrate(db *pgxpool.Pool) (bool, error) {
+
+	if _, err := database.Migrate(db); err != nil {
+		log.Print("Error migrating: ", err)
+		return false, err
+	}
+
+	log.Print("Database migration complete")
+	return true, nil
+
 }
