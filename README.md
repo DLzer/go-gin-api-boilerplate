@@ -1,5 +1,7 @@
 # Go GIN API
 
+[![golangci-lint](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml/badge.svg?branch=main)](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml)
+
 ## Built with
 
 - [GIN](https://github.com/gin-gonic/gin) for routing engine.
@@ -56,4 +58,3 @@ $ curl http://localhost:80/events
 - Testing
 - Seeding
 - Deployment workflow
-- Linting setup
