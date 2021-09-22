@@ -1,6 +1,6 @@
 # Go GIN API
 
-[![golangci-lint](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml/badge.svg?branch=main)](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml)
+[![golangci-lint](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml/badge.svg?branch=main)](https://github.com/DLzer/go-gin-api-boilerplate/actions/workflows/golangci-lint.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/DLzer/go-gin-api-boilerplate)](https://goreportcard.com/report/github.com/DLzer/go-gin-api-boilerplate)
 
 ## Built with
 
