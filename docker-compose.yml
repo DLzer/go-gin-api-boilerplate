@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+    api:
+        container_name: api
+        build: 
+            context: app
+            dockerfile: Dockerfile
+        ports: 
+            - "5000"
+        restart: on-failure
+        env_file:
+            - .env    
+        networks:
+            - frontend
+            - backend
+
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin_container
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "pgadmin"
+            PGADMIN_DEFAULT_PASSWORD: "temporary"
+        ports:
+            - "5050:80"
+        networks:
+            - backend
+        restart: unless-stopped
+
+    webserver:
+        image: nginx:latest
+        container_name: webserver
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+        depends_on:
+            - api
+        networks:
+            - frontend        
+
+# Networks to be created to facilitate communication between containers
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
+
+volumes:
+    nginxdata:
+        driver: local     
