@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/DLzer/go-gin-api-boilerplate/app/configs"
+	"github.com/DLzer/go-gin-api-boilerplate/app/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
@@ -22,8 +23,8 @@ type Database struct {
 
 // Load in configs. Start the Gin Framework. Connect to the database.
 // Initialize Repositories, Services, Controllers, and Route handlers.
-// Run GIN on the config port
-func run() {
+// Rurn GIN on the config port
+func Run() {
 
 	/*
 		====== Setup configs ============
@@ -47,6 +48,11 @@ func run() {
 
 	// Run the App on the configured port
 	r.Run(fmt.Sprintf(":%s", config.Port))
+
+	/*
+		====== Middleware ============
+	*/
+	r.Use(middleware.CORSMiddleware())
 }
 
 // Initialize expects the configuration model to attempt connecting to the PG
