@@ -9,40 +9,42 @@ services:
             - "5000"
         restart: on-failure
         env_file:
-            - .env    
+            - .env
+        depends_on:
+            - fullstack-postgres
         networks:
             - frontend
-            - backend
-
-   fullstack-postgres:
-        image: postgres
-        container_name: postgres_container
-        restart: always
-        environment:
-            - POSTGRES_USER="postgres"  
-            - POSTGRES_PASSWORD="postgres"
-            - POSTGRES_DB="local"
-            - DATABASE_HOST="localhost" 
-        ports:
-            - '5432:5432'
-        volumes:
-            - database_postgres:/var/lib/postgresql/data
-        networks:
             - backend
 
     pgadmin:
         image: dpage/pgadmin4
         container_name: pgadmin_container
         environment:
-            PGADMIN_DEFAULT_EMAIL: "pgadmin"
+            PGADMIN_DEFAULT_EMAIL: "pgadmin@pgadmin.com"
             PGADMIN_DEFAULT_PASSWORD: "temporary"
         ports:
             - "5050:80"
+        restart: unless-stopped
         networks:
             - backend
         depends_on:
             - fullstack-postgres
-        restart: unless-stopped
+
+    fullstack-postgres:
+        image: postgres
+        container_name: postgres_container
+        restart: always
+        environment:
+            - POSTGRES_USER="postgres"
+            - POSTGRES_PASSWORD="postgres"
+            - POSTGRES_DB="postgres"
+            - DATABASE_HOST="localhost"
+        ports:
+            - '5432:5432'
+        volumes:
+            - database_postgres:/var/lib/postgresql/data
+        networks:
+            - backend
 
     webserver:
         image: nginx:latest
@@ -55,7 +57,7 @@ services:
         depends_on:
             - api
         networks:
-            - frontend        
+            - frontend            
 
 # Networks to be created to facilitate communication between containers
 networks:

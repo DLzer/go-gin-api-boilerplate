@@ -24,7 +24,7 @@ func GetDBConfig() DBConfig {
 	var database = os.Getenv("DB_NAME")
 	var port = os.Getenv("DB_PORT")
 
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		hostname, port, username, password, database)
 
 	return DBConfig{
