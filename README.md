@@ -1,6 +1,6 @@
 # Go GIN API
 
-This is the core of the Nemus API. Built using GO with [GIN](https://github.com/gin-gonic/gin) for routing, NGINX as a request-response proxy-router / load balancer, and [PostgreSQL](https://www.postgresql.org/)-relational data storage layer.
+Built using GO with [GIN](https://github.com/gin-gonic/gin) for routing, NGINX as a request-response proxy-router / load balancer, and [PostgreSQL](https://www.postgresql.org/)-relational data storage layer.
 
 ## Directories
 
