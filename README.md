@@ -54,5 +54,6 @@ $ curl http://localhost:80/events
 ## Todo
 
 - Testing
+- Seeding
 - Deployment workflow
 - Linting setup
