@@ -34,7 +34,7 @@ func main() {
 
 // Run loads in configs. Start the Gin Framework. Connect to the database.
 // Initialize Repositories, Services, Controllers, and Route handlers.
-// Rurn GIN on the config port
+// Rurs GIN on the config port
 func Run() {
 
 	/*
@@ -49,7 +49,7 @@ func Run() {
 	log.Print("GIN running in release mode..")
 
 	/*
-		====== Database Initialize ============
+		====== Database Initialization ============
 	*/
 	db, err := Initialize(config)
 	if err != nil {
@@ -68,7 +68,7 @@ func Run() {
 	r.Use(middleware.CORSMiddleware())
 
 	/*
-		====== Repository Initalization ============
+		====== Repository Initialization ============
 	*/
 	eventRepo := eventrepo.NewEventRepo(db.Conn)
 
