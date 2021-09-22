@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/DLzer/go-gin-api-boilerplate/app/domain/event"
-	"github.com/DLzer/go-gin-api-boilerplate/app/services/eventservice"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,21 +22,21 @@ type EventInput struct {
 	Identity string `json:"identity"`
 }
 
-// The controller interface
-type EventController interface {
-	PostEvent(*gin.Context)
-	GetAllEvents(*gin.Context)
-	GetEventById(*gin.Context)
-	DeleteEventById(c *gin.Context)
+// The service interface
+type EventService interface {
+	CreateEvent(event *event.Event) (*event.Event, error)
+	GetAllEvents() ([]event.Event, error)
+	GetEventById(id string) (event.Event, error)
+	DeleteEventById(id string) (bool, error)
 }
 
 // The controller object
 type eventController struct {
-	es eventservice.EventService
+	es EventService
 }
 
 // Return new event controller object
-func NewEventController(es eventservice.EventService) EventController {
+func NewEventController(es EventService) *eventController {
 	return &eventController{es: es}
 }
 

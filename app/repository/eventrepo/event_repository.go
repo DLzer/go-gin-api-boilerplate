@@ -8,21 +8,13 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-// The repo interface
-type Repo interface {
-	CreateEvent(event *event.Event) (*event.Event, error)
-	GetAllEvents() ([]event.Event, error)
-	GetEventById(id string) (event.Event, error)
-	DeleteEventById(id string) (bool, error)
-}
-
 // The repo
 type eventRepo struct {
 	db *pgxpool.Pool
 }
 
 // Return event repo
-func NewEventRepo(db *pgxpool.Pool) Repo {
+func NewEventRepo(db *pgxpool.Pool) *eventRepo {
 	return &eventRepo{
 		db: db,
 	}
