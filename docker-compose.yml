@@ -14,6 +14,22 @@ services:
             - frontend
             - backend
 
+   fullstack-postgres:
+        image: postgres
+        container_name: postgres_container
+        restart: always
+        environment:
+            - POSTGRES_USER="postgres"  
+            - POSTGRES_PASSWORD="postgres"
+            - POSTGRES_DB="local"
+            - DATABASE_HOST="localhost" 
+        ports:
+            - '5432:5432'
+        volumes:
+            - database_postgres:/var/lib/postgresql/data
+        networks:
+            - backend
+
     pgadmin:
         image: dpage/pgadmin4
         container_name: pgadmin_container
@@ -24,6 +40,8 @@ services:
             - "5050:80"
         networks:
             - backend
+        depends_on:
+            - fullstack-postgres
         restart: unless-stopped
 
     webserver:
@@ -47,5 +65,6 @@ networks:
         driver: bridge
 
 volumes:
+    database_postgres:
     nginxdata:
         driver: local     
