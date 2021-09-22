@@ -21,6 +21,8 @@ var (
 	r = gin.Default()
 )
 
+// Database stores the
+// database connection pool
 type Database struct {
 	Conn *pgxpool.Pool
 }
@@ -30,7 +32,7 @@ func main() {
 	Run()
 }
 
-// Load in configs. Start the Gin Framework. Connect to the database.
+// Run loads in configs. Start the Gin Framework. Connect to the database.
 // Initialize Repositories, Services, Controllers, and Route handlers.
 // Rurn GIN on the config port
 func Run() {
@@ -47,7 +49,7 @@ func Run() {
 	log.Print("GIN running in release mode..")
 
 	/*
-		====== Database Initialization ============
+		====== Database Initialize ============
 	*/
 	db, err := Initialize(config)
 	if err != nil {
@@ -119,6 +121,7 @@ func Initialize(c configs.Config) (Database, error) {
 	return db, nil
 }
 
+// Migrate will run the database migrations
 func Migrate(db *pgxpool.Pool) (bool, error) {
 
 	if _, err := database.Migrate(db); err != nil {

@@ -7,7 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// The output object
+// EventOutput defines the structure of the
+// response to the client
 type EventOutput struct {
 	ID       uint64 `json:"id"`
 	Type     string `json:"type"`
@@ -15,14 +16,17 @@ type EventOutput struct {
 	Identity string `json:"identity"`
 }
 
-// The input object
+// EventInput defines the structure
+// that's expected on incoming request
 type EventInput struct {
 	Type     string `json:"type"`
 	Time     string `json:"time"`
 	Identity string `json:"identity"`
 }
 
-// The service interface
+// EventService is an interface
+// that defines what functions EventService
+// must implement
 type EventService interface {
 	CreateEvent(event *event.Event) (*event.Event, error)
 	GetAllEvents() ([]event.Event, error)
@@ -35,7 +39,8 @@ type eventController struct {
 	es EventService
 }
 
-// Return new event controller object
+// NewEventController expects an EventService interface
+// and in response returns the eventController object
 func NewEventController(es EventService) *eventController {
 	return &eventController{es: es}
 }

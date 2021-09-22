@@ -6,6 +6,8 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+// Migrate runs a series of database migrations
+// to create database tables
 func Migrate(db *pgxpool.Pool) (bool, error) {
 	eventQuery := `CREATE TABLE IF NOT EXISTS public.events
 	(

@@ -4,7 +4,8 @@ import (
 	"github.com/DLzer/go-gin-api-boilerplate/app/domain/event"
 )
 
-// The event repo interface
+// EventRepo is the defined interface
+// of functions that need to be implemented
 type EventRepo interface {
 	CreateEvent(event *event.Event) (*event.Event, error)
 	GetAllEvents() ([]event.Event, error)
@@ -17,7 +18,8 @@ type eventService struct {
 	er EventRepo
 }
 
-// Return new event service
+// NewEventService expects an object implementing
+// EventRepo and returns a new eventService object
 func NewEventService(er EventRepo) *eventService {
 	return &eventService{
 		er: er,

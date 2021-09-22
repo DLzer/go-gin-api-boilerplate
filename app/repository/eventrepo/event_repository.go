@@ -13,7 +13,8 @@ type eventRepo struct {
 	db *pgxpool.Pool
 }
 
-// Return event repo
+// NewEventRepo accepts a Pool Connection and
+// returns a new eventRepo object
 func NewEventRepo(db *pgxpool.Pool) *eventRepo {
 	return &eventRepo{
 		db: db,
