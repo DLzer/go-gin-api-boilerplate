@@ -15,10 +15,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
 var (
 	r = gin.Default()
+	p = ginprometheus.NewPrometheus("gin")
 )
 
 // Database stores the
@@ -85,6 +87,9 @@ func Run() {
 	/*
 		====== Routes ============
 	*/
+
+	// Prometheus setup
+	p.Use(r)
 
 	// Event routes
 	events := r.Group("/events")
